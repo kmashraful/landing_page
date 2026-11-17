@@ -13,10 +13,9 @@
 body{margin:0;background:#EEF0F3}
 a{color:#15181E}a:hover{color:#15181E}
 .px-bg{background-image:linear-gradient(rgba(21,24,30,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(21,24,30,.045) 1px,transparent 1px);background-size:16px 16px}
-.px-sprite{background-image:url(ash-sprite.webp);background-size:200% 100%;background-repeat:no-repeat;background-position:0 0;animation:px-blink 7s steps(1,end) infinite}
+.px-sprite{background-image:url(ash-sprite.webp);background-size:200% 100%;background-repeat:no-repeat;background-position:0 0;transform-origin:50% 100%;animation:px-blink 7s steps(1,end) infinite,px-breathe 3.6s steps(1,end) infinite}
 @keyframes px-blink{0%{background-position:0 0}38%{background-position:100% 0}40%{background-position:0 0}86%{background-position:100% 0}88%{background-position:0 0}91%{background-position:100% 0}93%{background-position:0 0}100%{background-position:0 0}}
-.px-bob{animation:px-bob 1.8s steps(1,end) infinite}
-@keyframes px-bob{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+@keyframes px-breathe{0%{transform:scale(1)}50%{transform:scale(1.014)}100%{transform:scale(1)}}
 .px-shadow{transform-origin:center;animation:px-shadow 1.8s steps(1,end) infinite}
 @keyframes px-shadow{0%{transform:scaleX(1);opacity:1}50%{transform:scaleX(.84);opacity:.6}100%{transform:scaleX(1);opacity:1}}
 .px-spark{position:absolute;width:4px;height:4px;background:#FFFFFF;box-shadow:0 -4px 0 #FFFFFF,0 4px 0 #FFFFFF,-4px 0 0 #FFFFFF,4px 0 0 #FFFFFF;opacity:0;pointer-events:none;animation:px-twinkle 3.2s steps(1,end) infinite}
@@ -32,8 +31,16 @@ a{color:#15181E}a:hover{color:#15181E}
 .px-btn:hover .px-arrow{transform:translateX(3px)}
 .px-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .px-still .px-sprite,.px-still .px-bob,.px-still .px-shadow,.px-still .px-spark,.px-still .px-caret{animation:none}
-@media (min-width:900px) and (min-height:540px){.px-root{--col:clamp(230px,calc(100vh - 405px),440px);padding:clamp(16px,3vh,40px) 32px clamp(10px,2vh,24px)!important}.px-main{gap:clamp(32px,4vw,56px)!important}.px-col{flex:0 0 var(--col)!important;max-width:var(--col)!important}.px-left{gap:clamp(10px,2.2vh,24px)!important}.px-right{gap:clamp(8px,1.5vh,16px)!important;flex-basis:max(var(--col),380px)!important;max-width:max(var(--col),380px)!important}.px-root .px-btn{min-height:clamp(44px,6.4vh,64px)!important;padding-top:8px!important;padding-bottom:8px!important}.px-foot{margin-top:clamp(10px,2.5vh,32px)!important}}
-@media (prefers-reduced-motion:reduce){.px-sprite,.px-bob,.px-shadow,.px-spark,.px-caret{animation:none}.px-btn,.px-arrow{transition:none}}
+.px-glass,.px-glass-shadow{clip-path:polygon(8px 0,calc(100% - 8px) 0,calc(100% - 8px) 4px,calc(100% - 4px) 4px,calc(100% - 4px) 8px,100% 8px,100% calc(100% - 8px),calc(100% - 4px) calc(100% - 8px),calc(100% - 4px) calc(100% - 4px),calc(100% - 8px) calc(100% - 4px),calc(100% - 8px) 100%,8px 100%,8px calc(100% - 4px),4px calc(100% - 4px),4px calc(100% - 8px),0 calc(100% - 8px),0 8px,4px 8px,4px 4px,8px 4px)}
+.px-glass{overflow:hidden;background-color:rgba(255,255,255,.42);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);box-shadow:inset 0 3px 0 rgba(255,255,255,.95),inset 3px 0 0 rgba(255,255,255,.7),inset 0 -3px 0 rgba(21,24,30,.07),inset -3px 0 0 rgba(21,24,30,.05),inset 0 0 0 1px rgba(255,255,255,.55)}
+.px-glass::before{content:"";position:absolute;left:12px;right:40%;top:10px;height:4px;background-color:rgba(255,255,255,.75);pointer-events:none}
+.px-glass::after{content:"";position:absolute;top:-30%;bottom:-30%;left:-40%;width:16%;background-color:rgba(255,255,255,.38);transform:skewX(-18deg);pointer-events:none;animation:px-sheen 7s steps(14,end) infinite}
+@keyframes px-sheen{0%{left:-40%}30%{left:130%}100%{left:130%}}
+.px-glass>*{position:relative;z-index:1}
+.px-still .px-glass::after{animation:none;display:none}
+@media (min-width:900px) and (min-height:540px){.px-root{--L:clamp(380px,30vw,440px);--P:min(calc(100vh - 130px),calc(100vw - 112px - var(--L)),640px);padding:clamp(16px,3vh,40px) 32px clamp(10px,2vh,24px)!important}.px-main{max-width:none!important;width:auto!important;gap:48px!important;align-items:flex-start!important;flex-wrap:nowrap!important}.px-left{flex:0 0 var(--L)!important;max-width:var(--L)!important;gap:clamp(10px,2vh,20px)!important}.px-links{gap:clamp(8px,1.4vh,16px)!important}.px-links .px-btn>span:first-child{width:clamp(30px,4.4vh,40px)!important;height:clamp(30px,4.4vh,40px)!important}.px-links .px-btn{min-height:clamp(40px,5.6vh,64px)!important;padding-top:6px!important;padding-bottom:6px!important}.px-cred{font-size:13px!important;line-height:1.45!important}.px-pic{flex:0 0 var(--P)!important;max-width:var(--P)!important}.px-glass{padding:clamp(14px,2.2vh,20px) 20px!important}.px-name{font-size:clamp(26px,calc(var(--L) * 0.085),38px)!important}.px-tag{font-size:clamp(12px,calc(var(--P,400px) * 0.024),15px)!important;padding-top:clamp(8px,1.4vh,12px)!important;padding-bottom:clamp(8px,1.4vh,12px)!important}.px-foot{margin-top:clamp(10px,2.5vh,32px)!important}}
+@media (min-width:900px) and (max-height:800px){.px-sub{display:none}.px-glass{gap:5px!important}}
+@media (prefers-reduced-motion:reduce){.px-glass::after{animation:none;display:none}.px-sprite,.px-bob,.px-shadow,.px-spark,.px-caret{animation:none}.px-btn,.px-arrow{transition:none}}
 </style>
 </head>
 <body>
@@ -42,32 +49,23 @@ a{color:#15181E}a:hover{color:#15181E}
 <div class="px-bg" aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none;"></div>
 <main class="px-main" style="position: relative; z-index: 1; width: 100%; max-width: 960px; display: flex; flex-wrap: wrap; align-items: stretch; justify-content: center; gap: 48px;">
 
-<section class="px-col px-left" aria-label="About Ash" style="flex: 1 1 340px; max-width: 440px; display: flex; flex-direction: column; align-items: stretch; text-align: left; gap: 24px;">
-<div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-<div class="px-bob" style="position: relative; width: 100%; aspect-ratio: 1 / 1; box-sizing: border-box; border: 4px solid #15181E; background-color: #15181E; overflow: hidden;">
-<div class="px-sprite" role="img" aria-label="Animated pixel-art portrait of Ash in an Oregon State University graduation gown" style="position: absolute; inset: 0;"></div>
-<span class="px-spark" aria-hidden="true" style="left: 42.5%; top: 72.5%;"></span>
-<span class="px-spark px-spark-2" aria-hidden="true" style="left: 58.5%; top: 15%;"></span>
-</div>
-<div class="px-shadow" aria-hidden="true" style="width: 76%; height: 10px; background-color: rgba(21, 24, 30, 0.16);"></div>
-</div>
-
-<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+<div class="px-left" style="flex: 1 1 340px; max-width: 440px; width: 100%; display: flex; flex-direction: column; gap: 20px;">
+<header style="position: relative;">
+<div class="px-glass-shadow" aria-hidden="true" style="position: absolute; inset: 0; transform: translate(6px, 6px); background-color: rgba(21, 24, 30, 0.16);"></div>
+<div class="px-glass" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 20px; box-sizing: border-box;">
 <p style="margin: 0; font-family: 'Pixelify Sans', 'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: #A8360A;">Hello, I'm Ash</p>
-<h1 style="margin: 0; font-family: 'Pixelify Sans', 'IBM Plex Mono', monospace; font-weight: 700; font-size: clamp(30px, 6.4vw, 42px); line-height: 1.08; letter-spacing: 0.01em;">K M Ashraful Islam</h1>
-<p style="margin: 0; font-size: 14px; line-height: 1.55; color: #3D4452;">PhD Candidate, Geography &amp; Geospatial Sciences<br>Oregon State University</p>
+<h1 class="px-name" style="margin: 0; font-family: 'Pixelify Sans', 'IBM Plex Mono', monospace; font-weight: 700; font-size: clamp(28px, 7vw, 38px); line-height: 1.08; letter-spacing: 0.01em;">K M Ashraful Islam</h1>
+<p class="px-cred" style="margin: 0; font-size: 14px; line-height: 1.55; color: #3D4452;">PhD Candidate, Geography &amp; Geospatial Sciences<br>Oregon State University</p>
 </div>
+</header>
 
-<p style="margin: 0; display: flex; align-items: center; gap: 8px; width: 100%; box-sizing: border-box; padding: 9px 14px; background-color: #15181E; color: #E9ECF1; font-size: 13px; line-height: 1.4; text-align: left;"><span aria-hidden="true" style="color: var(--accent);">&gt;</span><span>Making sense of landscapes</span><span class="px-caret" aria-hidden="true" style="flex: none; width: 8px; height: 15px; background-color: var(--accent);"></span></p>
-</section>
-
-<nav class="px-col px-right" aria-label="Links" style="flex: 1 1 340px; max-width: 440px; width: 100%; display: flex; flex-direction: column; gap: 16px;">
+<nav class="px-links" aria-label="Links" style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 16px;">
 
 <a class="px-btn" href="https://www.linkedin.com/in/ashraful-cuet-bd/" target="_blank" rel="noopener noreferrer" style="flex: 1 1 auto; display: flex; align-items: center; gap: 14px; min-height: 72px; padding: 14px 16px; box-sizing: border-box; border: 3px solid #15181E; background-color: var(--accent); color: #15181E; text-decoration: none;">
 <span aria-hidden="true" style="flex: none; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border: 2px solid #15181E; background-color: #FFFFFF;"><svg width="26" height="26" viewBox="0 0 13 13" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" transform="translate(0 1)" d="M3 0h3v1h-3zM2 1h5v1h-5zM2 2h5v1h-5zM2 3h5v1h-5zM10 3h1v1h-1zM3 4h3v1h-3zM10 4h1v1h-1zM8 5h5v1h-5zM1 6h6v1h-6zM10 6h1v1h-1zM0 7h8v1h-8zM10 7h1v1h-1zM0 8h8v1h-8zM0 9h8v1h-8zM0 10h8v1h-8z"></path></svg></span>
 <span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
 <span style="font-family: 'Pixelify Sans', 'IBM Plex Mono', monospace; font-weight: 700; font-size: 19px; line-height: 1.2;">Connect with me on LinkedIn</span>
-<span style="font-size: 12.5px; line-height: 1.3; color: #15181E; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">linkedin.com/in/ashraful-cuet-bd</span>
+<span class="px-sub" style="font-size: 12.5px; line-height: 1.3; color: #15181E; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">linkedin.com/in/ashraful-cuet-bd</span>
 </span>
 <span class="px-arrow" aria-hidden="true" style="flex: none; display: flex;"><svg width="8" height="10" viewBox="0 0 4 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" d="M0 0h1v1h-1zM0 1h2v1h-2zM0 2h3v1h-3zM0 3h2v1h-2zM0 4h1v1h-1z"></path></svg></span>
 </a>
@@ -77,7 +75,7 @@ a{color:#15181E}a:hover{color:#15181E}
 <span aria-hidden="true" style="flex: none; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border: 2px solid #15181E; background-color: #EEF0F3;"><svg width="26" height="26" viewBox="0 0 13 13" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" transform="translate(0 2)" d="M0 0h12v1h-12zM0 1h2v1h-2zM10 1h2v1h-2zM0 2h1v1h-1zM2 2h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM0 3h1v1h-1zM3 3h1v1h-1zM8 3h1v1h-1zM11 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM7 4h1v1h-1zM11 4h1v1h-1zM0 5h1v1h-1zM5 5h2v1h-2zM11 5h1v1h-1zM0 6h1v1h-1zM11 6h1v1h-1zM0 7h1v1h-1zM11 7h1v1h-1zM0 8h12v1h-12z"></path></svg></span>
 <span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
 <span style="font-family: 'Pixelify Sans', 'IBM Plex Mono', monospace; font-weight: 600; font-size: 18px; line-height: 1.2;">Email</span>
-<span style="font-size: 12.5px; line-height: 1.3; color: #4A5160; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">islamkm@oregonstate.edu</span>
+<span class="px-sub" style="font-size: 12.5px; line-height: 1.3; color: #4A5160; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">islamkm@oregonstate.edu</span>
 </span>
 <span class="px-arrow" aria-hidden="true" style="flex: none; display: flex;"><svg width="8" height="10" viewBox="0 0 4 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" d="M0 0h1v1h-1zM0 1h2v1h-2zM0 2h3v1h-3zM0 3h2v1h-2zM0 4h1v1h-1z"></path></svg></span>
 </a>
@@ -96,7 +94,7 @@ a{color:#15181E}a:hover{color:#15181E}
 <span aria-hidden="true" style="flex: none; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border: 2px solid #15181E; background-color: #EEF0F3;"><svg width="26" height="26" viewBox="0 0 13 13" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" d="M4 0h4v1h-4zM2 1h2v1h-2zM5 1h2v1h-2zM8 1h2v1h-2zM1 2h1v1h-1zM4 2h1v1h-1zM7 2h1v1h-1zM10 2h1v1h-1zM1 3h1v1h-1zM4 3h1v1h-1zM7 3h1v1h-1zM10 3h1v1h-1zM0 4h12v1h-12zM0 5h1v1h-1zM4 5h1v1h-1zM7 5h1v1h-1zM11 5h1v1h-1zM0 6h1v1h-1zM4 6h1v1h-1zM7 6h1v1h-1zM11 6h1v1h-1zM0 7h12v1h-12zM1 8h1v1h-1zM4 8h1v1h-1zM7 8h1v1h-1zM10 8h1v1h-1zM1 9h1v1h-1zM4 9h1v1h-1zM7 9h1v1h-1zM10 9h1v1h-1zM2 10h2v1h-2zM5 10h2v1h-2zM8 10h2v1h-2zM4 11h4v1h-4z"></path></svg></span>
 <span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
 <span style="font-family: 'Pixelify Sans', 'IBM Plex Mono', monospace; font-weight: 600; font-size: 18px; line-height: 1.2;">Website</span>
-<span style="font-size: 12.5px; line-height: 1.3; color: #4A5160; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">kmashrafulislam.com</span>
+<span class="px-sub" style="font-size: 12.5px; line-height: 1.3; color: #4A5160; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">kmashrafulislam.com</span>
 </span>
 <span class="px-arrow" aria-hidden="true" style="flex: none; display: flex;"><svg width="8" height="10" viewBox="0 0 4 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" d="M0 0h1v1h-1zM0 1h2v1h-2zM0 2h3v1h-3zM0 3h2v1h-2zM0 4h1v1h-1z"></path></svg></span>
 </a>
@@ -105,7 +103,7 @@ a{color:#15181E}a:hover{color:#15181E}
 <span aria-hidden="true" style="flex: none; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border: 2px solid #15181E; background-color: #EEF0F3;"><svg width="26" height="26" viewBox="0 0 13 13" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" transform="translate(0 1)" d="M5 0h2v1h-2zM3 1h6v1h-6zM1 2h10v1h-10zM0 3h12v1h-12zM1 4h10v1h-10zM3 5h6v1h-6zM11 5h1v1h-1zM2 6h8v1h-8zM11 6h1v1h-1zM2 7h2v1h-2zM8 7h2v1h-2zM11 7h1v1h-1zM2 8h8v1h-8zM11 8h1v1h-1zM3 9h6v1h-6zM10 9h3v1h-3z"></path></svg></span>
 <span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
 <span style="font-family: 'Pixelify Sans', 'IBM Plex Mono', monospace; font-weight: 600; font-size: 18px; line-height: 1.2;">Google Scholar</span>
-<span style="font-size: 12.5px; line-height: 1.3; color: #4A5160; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Publications and citations</span>
+<span class="px-sub" style="font-size: 12.5px; line-height: 1.3; color: #4A5160; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Publications and citations</span>
 </span>
 <span class="px-arrow" aria-hidden="true" style="flex: none; display: flex;"><svg width="8" height="10" viewBox="0 0 4 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" d="M0 0h1v1h-1zM0 1h2v1h-2zM0 2h3v1h-3zM0 3h2v1h-2zM0 4h1v1h-1z"></path></svg></span>
 </a>
@@ -114,7 +112,7 @@ a{color:#15181E}a:hover{color:#15181E}
 <span aria-hidden="true" style="flex: none; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border: 2px solid #15181E; background-color: #EEF0F3;"><svg width="26" height="26" viewBox="0 0 13 13" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" transform="translate(0 1)" d="M0 0h12v1h-12zM0 1h1v1h-1zM11 1h1v1h-1zM0 2h1v1h-1zM2 2h2v1h-2zM5 2h5v1h-5zM11 2h1v1h-1zM0 3h1v1h-1zM2 3h2v1h-2zM11 3h1v1h-1zM0 4h1v1h-1zM5 4h5v1h-5zM11 4h1v1h-1zM0 5h1v1h-1zM2 5h2v1h-2zM11 5h1v1h-1zM0 6h1v1h-1zM2 6h2v1h-2zM5 6h4v1h-4zM11 6h1v1h-1zM0 7h1v1h-1zM2 7h2v1h-2zM11 7h1v1h-1zM0 8h1v1h-1zM11 8h1v1h-1zM0 9h12v1h-12z"></path></svg></span>
 <span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
 <span style="font-family: 'Pixelify Sans', 'IBM Plex Mono', monospace; font-weight: 600; font-size: 18px; line-height: 1.2;">ORCID</span>
-<span style="font-size: 12.5px; line-height: 1.3; color: #4A5160; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">0000-0002-1783-1180</span>
+<span class="px-sub" style="font-size: 12.5px; line-height: 1.3; color: #4A5160; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">0000-0002-1783-1180</span>
 </span>
 <span class="px-arrow" aria-hidden="true" style="flex: none; display: flex;"><svg width="8" height="10" viewBox="0 0 4 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" d="M0 0h1v1h-1zM0 1h2v1h-2zM0 2h3v1h-3zM0 3h2v1h-2zM0 4h1v1h-1z"></path></svg></span>
 </a>
@@ -123,17 +121,40 @@ a{color:#15181E}a:hover{color:#15181E}
 <span aria-hidden="true" style="flex: none; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border: 2px solid #15181E; background-color: #EEF0F3;"><svg width="26" height="26" viewBox="0 0 13 13" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" transform="translate(0 2)" d="M3 0h1v1h-1zM8 0h1v1h-1zM2 1h1v1h-1zM9 1h1v1h-1zM1 2h1v1h-1zM5 2h1v1h-1zM10 2h1v1h-1zM0 3h1v1h-1zM5 3h1v1h-1zM11 3h1v1h-1zM4 4h1v1h-1zM1 5h1v1h-1zM4 5h1v1h-1zM10 5h1v1h-1zM2 6h2v1h-2zM9 6h1v1h-1zM3 7h1v1h-1zM8 7h1v1h-1z"></path></svg></span>
 <span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
 <span style="font-family: 'Pixelify Sans', 'IBM Plex Mono', monospace; font-weight: 600; font-size: 18px; line-height: 1.2;">GitHub</span>
-<span style="font-size: 12.5px; line-height: 1.3; color: #4A5160; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">github.com/kmashraful</span>
+<span class="px-sub" style="font-size: 12.5px; line-height: 1.3; color: #4A5160; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">github.com/kmashraful</span>
 </span>
 <span class="px-arrow" aria-hidden="true" style="flex: none; display: flex;"><svg width="8" height="10" viewBox="0 0 4 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="#15181E" d="M0 0h1v1h-1zM0 1h2v1h-2zM0 2h3v1h-3zM0 3h2v1h-2zM0 4h1v1h-1z"></path></svg></span>
 </a>
 
 </nav>
+</div>
+
+<section class="px-pic" aria-label="Portrait" style="flex: 1 1 340px; max-width: 440px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+<div class="px-bob" style="position: relative; width: 100%; aspect-ratio: 1 / 1; box-sizing: border-box; border: 4px solid #15181E; background-color: #15181E; overflow: hidden; box-shadow: 6px 6px 0 rgba(21, 24, 30, 0.16);">
+<div class="px-sprite" role="img" aria-label="Animated pixel-art portrait of Ash in an Oregon State University graduation gown" style="position: absolute; inset: 0;"></div>
+<span class="px-spark" aria-hidden="true" style="left: 42.5%; top: 72.5%;"></span>
+<span class="px-spark px-spark-2" aria-hidden="true" style="left: 58.5%; top: 15%;"></span>
+<p class="px-tag" style="position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; margin: 0; display: flex; align-items: center; justify-content: center; gap: 6px; box-sizing: border-box; padding: 10px 12px; white-space: nowrap; background-color: rgba(21, 24, 30, 0.9); color: #E9ECF1; font-size: 13px; line-height: 1.4; text-align: left;"><span aria-hidden="true" style="color: var(--accent);">&gt;</span><span>Making sense of landscapes</span><span class="px-caret" aria-hidden="true" style="flex: none; width: 8px; height: 15px; background-color: var(--accent);"></span></p>
+</div>
+</section>
 </main>
 
 <footer class="px-foot" style="position: relative; z-index: 1; margin-top: 48px; font-size: 12px; line-height: 1.5; color: #4A5160; text-align: center;">© 2026 K M Ashraful Islam</footer>
 </div>
 <script>
+(function () {
+  var root = document.querySelector('.px-root');
+  var left = document.querySelector('.px-left');
+  var mq = window.matchMedia('(min-width:900px) and (min-height:540px)');
+  function sync() {
+    if (!mq.matches) { root.style.removeProperty('--P'); return; }
+    var room = root.clientWidth - 64 - 48 - left.offsetWidth;
+    root.style.setProperty('--P', Math.max(200, Math.min(left.offsetHeight, room)) + 'px');
+  }
+  if (window.ResizeObserver) new ResizeObserver(sync).observe(left);
+  window.addEventListener('resize', sync);
+  sync();
+})();
 (function () {
   var btn = document.getElementById('copy-btn');
   var iconCopy = document.getElementById('icon-copy');
